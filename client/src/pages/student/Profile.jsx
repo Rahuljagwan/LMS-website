@@ -56,10 +56,10 @@ const Profile = () => {
   useEffect(() => {
     if (isSuccess) {
       refetch();
-      toast.success(data.message || "Profile updated.");
+      toast.success(data?.message || "Profile updated.");
     }
     if (isError) {
-      toast.error(error.message || "Failed to update profile");
+      toast.error(error?.message || "Failed to update profile");
     }
   }, [error, updateUserData, isSuccess, isError]);
 
