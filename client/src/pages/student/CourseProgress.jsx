@@ -53,11 +53,11 @@ const CourseProgress = () => {
 
   // initialze the first lecture is not exist
   const initialLecture =
-    currentLecture || (courseDetails.lectures && courseDetails.lectures[0]);
+    currentLecture || (courseDetails?.lectures && courseDetails?.lectures[0]);
 
   const isLectureCompleted = (lectureId) => {
     // returns true or false on providing id
-    return progress.some((prog) => prog.lectureId === lectureId && prog.viewed);
+    return progress.some((prog) => prog?.lectureId === lectureId && prog?.viewed);
   };
 
   const handleLectureProgress = async (lectureId) => {
@@ -114,7 +114,7 @@ const CourseProgress = () => {
           <div className="mt-2 ">
             <h3 className="font-medium text-lg">
               {`Lecture ${
-                courseDetails.lectures.findIndex(
+                courseDetails?.lectures.findIndex(
                   (lec) =>
                     lec._id === (currentLecture?._id || initialLecture._id)
                 ) + 1
@@ -147,7 +147,7 @@ const CourseProgress = () => {
                     )}
                     <div>
                       <CardTitle className="text-lg font-medium">
-                        {lecture.lectureTitle}
+                        {lecture?.lectureTitle}
                       </CardTitle>
                     </div>
                   </div>
