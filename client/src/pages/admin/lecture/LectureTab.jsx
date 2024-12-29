@@ -38,9 +38,9 @@ const LectureTab = () => {
 
   useEffect(() => {
     if (lecture) {
-      setLectureTitle(lecture.lectureTitle);
-      setIsFree(lecture.isPreviewFree);
-      setUploadVideoInfo(lecture.videoInfo);
+      setLectureTitle(lecture?.lectureTitle);
+      setIsFree(lecture?.isPreviewFree);
+      setUploadVideoInfo(lecture?.videoInfo);
     }
   }, [lecture]);
 
@@ -68,11 +68,11 @@ const LectureTab = () => {
         if (res.data.success) {
           console.log(res);
           setUploadVideoInfo({
-            videoUrl: res.data.data.url,
-            publicId: res.data.data.public_id,
+            videoUrl: res?.data?.data?.url,
+            publicId: res?.data?.data?.public_id,
           });
           setBtnDisable(false);
-          toast.success(res.data.message);
+          toast.success(res?.data?.message);
         }
       } catch (error) {
         console.log(error);
@@ -101,16 +101,16 @@ const LectureTab = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      toast.success(data.message);
+      toast.success(data?.message);
     }
     if (error) {
-      toast.error(error.data.message);
+      toast.error(error?.data?.message);
     }
   }, [isSuccess, error]);
 
   useEffect(() => {
     if (removeSuccess) {
-      toast.success(removeData.message);
+      toast.success(removeData?.message);
     }
   }, [removeSuccess]);
 
