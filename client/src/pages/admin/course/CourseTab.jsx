@@ -59,12 +59,12 @@ const CourseTab = () => {
     if (courseByIdData?.course) {
       const course = courseByIdData?.course;
       setInput({
-        courseTitle: course.courseTitle,
-        subTitle: course.subTitle,
-        description: course.description,
-        category: course.category,
-        courseLevel: course.courseLevel,
-        coursePrice: course.coursePrice,
+        courseTitle: course?.courseTitle,
+        subTitle: course?.subTitle,
+        description: course?.description,
+        category: course?.category,
+        courseLevel: course?.courseLevel,
+        coursePrice: course?.coursePrice,
         courseThumbnail: "",
       });
     }
@@ -97,13 +97,13 @@ const CourseTab = () => {
   const updateCourseHandler = async () => {
     console.log(input);
     const formData = new FormData();
-    formData.append("courseTitle", input.courseTitle);
-    formData.append("subTitle", input.subTitle);
-    formData.append("description", input.description);
-    formData.append("category", input.category);
-    formData.append("courseLevel", input.courseLevel);
-    formData.append("coursePrice", input.coursePrice);
-    formData.append("courseThumbnail", input.courseThumbnail);
+    formData.append("courseTitle", input?.courseTitle);
+    formData.append("subTitle", input?.subTitle);
+    formData.append("description", input?.description);
+    formData.append("category", input?.category);
+    formData.append("courseLevel", input?.courseLevel);
+    formData.append("coursePrice", input?.coursePrice);
+    formData.append("courseThumbnail", input?.courseThumbnail);
 
     await editCourse({ formData, courseId });
   };
@@ -113,7 +113,7 @@ const CourseTab = () => {
       const response = await publishCourse({ courseId, query: action });
       if (response.data) {
         refetch();
-        toast.success(response.data.message);
+        toast.success(response.data?.message);
       }
     } catch (error) {
       toast.error("Failed to publish or unpublish course");
