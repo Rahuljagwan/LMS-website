@@ -31,12 +31,12 @@ export const getCourseProgress = async (req, res) => {
       });
     }
 
-    // Step-3 Return the user's course progress alog with course details
+    // Step-3 Return the user's course progress along with course details
     return res.status(200).json({
       data: {
         courseDetails,
-        progress: courseProgress.lectureProgress,
-        completed: courseProgress.completed,
+        progress: courseProgress?.lectureProgress || [],
+        completed: courseProgress?.completed || false,
       },
     });
   } catch (error) {
@@ -53,7 +53,7 @@ export const updateLectureProgress = async (req, res) => {
     let courseProgress = await CourseProgress.findOne({ courseId, userId });
 
     if (!courseProgress) {
-      // If no progress exist, create a new record
+      // If no progress exists, create a new record
       courseProgress = new CourseProgress({
         userId,
         courseId,
@@ -63,12 +63,12 @@ export const updateLectureProgress = async (req, res) => {
     }
 
     // find the lecture progress in the course progress
-    const lectureIndex = courseProgress.lectureProgress.findIndex(
+    const lectureIndex = courseProgress.lectureProgress?.findIndex(
       (lecture) => lecture.lectureId === lectureId
     );
 
     if (lectureIndex !== -1) {
-      // if lecture already exist, update its status
+      // if lecture already exists, update its status
       courseProgress.lectureProgress[lectureIndex].viewed = true;
     } else {
       // Add new lecture progress
@@ -78,14 +78,14 @@ export const updateLectureProgress = async (req, res) => {
       });
     }
 
-    // if all lecture is complete
-    const lectureProgressLength = courseProgress.lectureProgress.filter(
+    // if all lectures are complete
+    const lectureProgressLength = courseProgress.lectureProgress?.filter(
       (lectureProg) => lectureProg.viewed
     ).length;
 
     const course = await Course.findById(courseId);
 
-    if (course.lectures.length === lectureProgressLength)
+    if (course?.lectures?.length === lectureProgressLength)
       courseProgress.completed = true;
 
     await courseProgress.save();
@@ -107,7 +107,7 @@ export const markAsCompleted = async (req, res) => {
     if (!courseProgress)
       return res.status(404).json({ message: "Course progress not found" });
 
-    courseProgress.lectureProgress.map(
+    courseProgress.lectureProgress?.map(
       (lectureProgress) => (lectureProgress.viewed = true)
     );
     courseProgress.completed = true;
@@ -127,7 +127,7 @@ export const markAsInCompleted = async (req, res) => {
     if (!courseProgress)
       return res.status(404).json({ message: "Course progress not found" });
 
-    courseProgress.lectureProgress.map(
+    courseProgress.lectureProgress?.map(
       (lectureProgress) => (lectureProgress.viewed = false)
     );
     courseProgress.completed = false;
