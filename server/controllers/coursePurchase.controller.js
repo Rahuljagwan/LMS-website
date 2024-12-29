@@ -51,7 +51,7 @@ export const createCheckoutSession = async (req, res) => {
       },
     });
 
-    if (!session.url) {
+    if (!session?.url) {
       return res
         .status(400)
         .json({ success: false, message: "Error while creating session" });
@@ -103,13 +103,13 @@ export const stripeWebhook = async (req, res) => {
         return res.status(404).json({ message: "Purchase not found" });
       }
 
-      if (session.amount_total) {
+      if (session?.amount_total) {
         purchase.amount = session.amount_total / 100;
       }
       purchase.status = "completed";
 
       // Make all lectures visible by setting `isPreviewFree` to true
-      if (purchase.courseId && purchase.courseId.lectures.length > 0) {
+      if (purchase.courseId?.lectures?.length > 0) {
         await Lecture.updateMany(
           { _id: { $in: purchase.courseId.lectures } },
           { $set: { isPreviewFree: true } }
@@ -138,6 +138,7 @@ export const stripeWebhook = async (req, res) => {
   }
   res.status(200).send();
 };
+
 export const getCourseDetailWithPurchaseStatus = async (req, res) => {
   try {
     const { courseId } = req.params;
@@ -167,7 +168,7 @@ export const getAllPurchasedCourse = async (_, res) => {
     const purchasedCourse = await CoursePurchase.find({
       status: "completed",
     }).populate("courseId");
-    if (!purchasedCourse) {
+    if (!purchasedCourse?.length) {
       return res.status(404).json({
         purchasedCourse: [],
       });
