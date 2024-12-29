@@ -47,7 +47,7 @@ const CourseDetail = () => {
           <p>
             Created By{" "}
             <span className="text-[#C0C4FC] underline italic">
-              {course?.creator.name}
+              {course?.creator?.name}
             </span>
           </p>
           <div className="flex items-center gap-2 text-sm">
@@ -71,12 +71,12 @@ const CourseDetail = () => {
               <CardDescription>4 lectures</CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
-              {course.lectures.map((lecture, idx) => (
+              {course?.lectures?.map((lecture, idx) => (
                 <div key={idx} className="flex items-center gap-3 text-sm">
                   <span>
                     {true ? <PlayCircle size={14} /> : <Lock size={14} />}
                   </span>
-                  <p>{lecture.lectureTitle}</p>
+                  <p>{lecture?.lectureTitle}</p>
                 </div>
               ))}
             </CardContent>
@@ -94,7 +94,7 @@ const CourseDetail = () => {
                 />
               </div>
               <h1 className="font-semibold flex items-center gap-1">
-                Lecture title: {course.lectures[0].lectureTitle}
+                Lecture title: {course?.lectures[0]?.lectureTitle}
                 <CheckCircle className="h-3 w-3 " />
               </h1>
               <Separator className="my-2" />
